@@ -1,7 +1,7 @@
 const html = document.documentElement;
-const themeToggle = document.getElementById('themeToggle');
 const navToggle = document.querySelector('.nav-toggle');
 const siteNav = document.querySelector('.site-nav');
+const siteSearchForms = document.querySelectorAll('.site-search');
 const scrollProgress = document.getElementById('scrollProgress');
 const backToTop = document.getElementById('backToTop');
 const header = document.querySelector('.site-header');
@@ -9,18 +9,7 @@ const revealElements = document.querySelectorAll('.reveal');
 const abstractButtons = document.querySelectorAll('.abstract-toggle');
 const contactForm = document.getElementById('contactForm');
 
-function loadTheme() {
-  const saved = localStorage.getItem('theme');
-  const theme = saved === 'dark' ? 'dark' : 'light';
-  html.setAttribute('data-theme', theme);
-}
-
-function toggleTheme() {
-  const current = html.getAttribute('data-theme');
-  const next = current === 'dark' ? 'light' : 'dark';
-  html.setAttribute('data-theme', next);
-  localStorage.setItem('theme', next);
-}
+html.setAttribute('data-theme', 'light');
 
 function updateScrollProgress() {
   const scrollTop = window.scrollY;
@@ -83,6 +72,29 @@ function setupAbstractToggle() {
   });
 }
 
+function setupSiteSearch() {
+  if (!siteSearchForms.length) return;
+
+  const routes = [
+    { page: 'research.html', terms: ['research', 'paper', 'publication', 'abstract', 'journal', 'ssrn', 'education', 'economics'] },
+    { page: 'teaching.html', terms: ['teaching', 'course', 'assistant', 'microeconomics', 'econometrics', 'game theory'] },
+    { page: 'contact.html', terms: ['contact', 'email', 'linkedin', 'message', 'collaboration'] },
+    { page: 'cv.pdf', terms: ['cv', 'resume', 'download'] },
+    { page: 'index.html', terms: ['home', 'about', 'profile', 'japneet'] },
+  ];
+
+  siteSearchForms.forEach((form) => {
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const query = new FormData(form).get('q')?.toString().trim().toLowerCase();
+      if (!query) return;
+
+      const match = routes.find(({ terms }) => terms.some((term) => query.includes(term)));
+      window.location.href = match ? match.page : `research.html?q=${encodeURIComponent(query)}`;
+    });
+  });
+}
+
 function validateEmail(value) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
 }
@@ -138,14 +150,13 @@ function setupBackToTop() {
 }
 
 window.addEventListener('DOMContentLoaded', () => {
-  loadTheme();
   setupRevealObserver();
   setupNavToggle();
+  setupSiteSearch();
   setupAbstractToggle();
   setupContactForm();
   setupBackToTop();
   updateScrollProgress();
 });
 
-themeToggle?.addEventListener('click', toggleTheme);
 window.addEventListener('scroll', updateScrollProgress);
