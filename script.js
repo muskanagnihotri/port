@@ -84,6 +84,38 @@ function setupSiteSearch() {
   ];
 
   siteSearchForms.forEach((form) => {
+    const input = form.querySelector('input[type="search"]');
+    const toggle = form.querySelector('.search-toggle');
+
+    if (toggle && input) {
+      toggle.addEventListener('mousedown', (event) => {
+        event.preventDefault();
+      });
+
+      toggle.addEventListener('click', () => {
+        if (!form.classList.contains('open')) {
+          form.classList.add('open');
+          toggle.setAttribute('aria-label', 'Search site');
+          input.focus();
+          return;
+        }
+
+        if (input.value.trim()) {
+          form.requestSubmit();
+        } else {
+          form.classList.remove('open');
+          toggle.setAttribute('aria-label', 'Open search');
+        }
+      });
+
+      input.addEventListener('blur', () => {
+        if (!input.value.trim()) {
+          form.classList.remove('open');
+          toggle.setAttribute('aria-label', 'Open search');
+        }
+      });
+    }
+
     form.addEventListener('submit', (event) => {
       event.preventDefault();
       const query = new FormData(form).get('q')?.toString().trim().toLowerCase();

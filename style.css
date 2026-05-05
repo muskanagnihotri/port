@@ -104,21 +104,53 @@ a.button {
 .site-search {
   display: inline-flex;
   align-items: center;
+  flex-direction: row-reverse;
+  gap: 0.35rem;
 }
 .site-search input {
-  width: 8.5rem;
+  width: 0;
+  opacity: 0;
   border: 1px solid var(--border);
   border-radius: 999px;
   background: var(--surface);
   color: var(--text);
-  padding: 0.45rem 0.75rem;
+  padding: 0.45rem 0;
   font: inherit;
   font-size: 0.9rem;
+  pointer-events: none;
+  transition: width 0.2s ease, opacity 0.2s ease, padding 0.2s ease;
+}
+.site-search.open input {
+  width: 8.5rem;
+  opacity: 1;
+  padding: 0.45rem 0.75rem;
+  pointer-events: auto;
 }
 .site-search input:focus {
   outline: none;
   border-color: var(--accent);
   box-shadow: 0 0 0 3px rgba(74,111,165,0.12);
+}
+.search-toggle {
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: var(--surface);
+  color: var(--text);
+  display: inline-grid;
+  place-items: center;
+  padding: 0;
+  cursor: pointer;
+}
+.search-toggle:hover,
+.site-search.open .search-toggle {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.search-toggle svg {
+  width: 17px;
+  height: 17px;
 }
 .scroll-progress {
   height: 3px;
@@ -185,7 +217,7 @@ h3 {
   align-items: start;
 }
 .hero-card {
-  padding: 2rem;
+  padding: 0;
 }
 .hero-text {
   padding: 0;
@@ -240,6 +272,7 @@ h3 {
 .contact-info p,
 .abstract-content p {
   margin: 0 0 1rem;
+  text-align: justify;
 }
 .hero-actions {
   display: flex;
@@ -356,6 +389,7 @@ body[data-page="research"] .research-section:not(.publications-section):not(.job
 .research-section h2 {
   margin-bottom: 0.45rem;
   font-size: clamp(1.35rem, 2vw, 1.85rem);
+  text-align: center;
 }
 .card-grid {
   display: grid;
@@ -378,8 +412,26 @@ body[data-page="research"] .research-section:not(.publications-section):not(.job
   margin: 0;
   font-size: 1.15rem;
 }
-.paper-card h3:hover {
+.paper-title,
+.paper-title-link {
   color: var(--accent);
+}
+.paper-title-meta {
+  color: var(--text);
+  font-weight: 400;
+}
+.paper-title-link {
+  text-decoration: none;
+}
+.paper-title-link:hover {
+  color: var(--accent);
+  text-decoration: none;
+}
+.publications-section .paper-title-link,
+.publications-section .paper-title-link:hover {
+  color: var(--accent);
+  font-size: 1.15rem;
+  font-weight: 700;
 }
 .paper-meta {
   margin: 0.35rem 0 0.45rem;
@@ -456,6 +508,19 @@ body[data-page="research"] .research-section:not(.publications-section):not(.job
   gap: 0.5rem;
   margin-top: 0.75rem;
 }
+.section-line {
+  margin: 0;
+  text-align: justify;
+}
+.section-label {
+  color: var(--accent);
+  font-weight: 700;
+}
+.publications-section h2 {
+  color: var(--accent);
+  text-align: left;
+  padding: 0 1rem;
+}
 .pill {
   display: inline-flex;
   align-items: center;
@@ -476,10 +541,10 @@ body[data-page="research"] .research-section:not(.publications-section):not(.job
   display: none;
 }
 .timeline-entry {
-  padding: 1.25rem;
-  border-radius: 24px;
-  background: var(--card-bg);
-  border: 1px solid var(--border);
+  padding: 0;
+  border-radius: 0;
+  background: transparent;
+  border: none;
 }
 .timeline-entry + .timeline-entry {
   margin-top: 1rem;
@@ -500,11 +565,21 @@ body[data-page="research"] .research-section:not(.publications-section):not(.job
 .timeline-card li {
   margin-bottom: 0.25rem;
   color: var(--text);
+  text-align: justify;
 }
 .contact-grid {
   display: grid;
   gap: 2rem;
   grid-template-columns: 1fr;
+}
+.contact-links {
+  display: grid;
+  gap: 0.6rem;
+  justify-content: center;
+  text-align: center;
+}
+.contact-links p {
+  margin: 0;
 }
 .contact-info {
   display: grid;
@@ -700,9 +775,11 @@ body[data-page="research"] .research-section:not(.publications-section):not(.job
   .split-grid {
     grid-template-columns: 1fr;
   }
-  .hero-card,
   .hero-text {
     padding: 1.5rem;
+  }
+  .hero-card {
+    padding: 1.5rem 1.5rem 0;
   }
 }
 @media (max-width: 768px) {
@@ -733,8 +810,9 @@ body[data-page="research"] .research-section:not(.publications-section):not(.job
   .site-search {
     width: 100%;
     padding: 0.75rem 1rem 1rem;
+    justify-content: flex-end;
   }
-  .site-search input {
+  .site-search.open input {
     flex: 1;
     width: auto;
   }
@@ -764,7 +842,7 @@ body[data-page="research"] .research-section:not(.publications-section):not(.job
     left: 10px;
   }
   .timeline-entry {
-    padding-left: 3rem;
+    padding-left: 0;
   }
   .timeline-date {
     left: 0;

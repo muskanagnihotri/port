@@ -26,6 +26,12 @@
           <a href="contact.html" class="nav-link active">Contact</a>
           <form class="site-search" role="search">
             <input type="search" name="q" aria-label="Search site" placeholder="Search">
+            <button class="search-toggle" type="button" aria-label="Open search">
+              <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="7"></circle>
+                <path d="M16.5 16.5 21 21" stroke-linecap="round"></path>
+              </svg>
+            </button>
           </form>
         </nav>
       </div>
@@ -35,46 +41,18 @@
     <main class="container main-content">
       <section class="page-intro reveal">
         <p class="eyebrow" style="text-align: center;">Contact</p>
-        <p>Reach out for collaborations, speaking engagements, or questions about research and teaching.</p>
       </section>
 
       <section class="contact-grid reveal">
-        <form id="contactForm" class="contact-form" novalidate>
-          <div class="form-group reveal">
-            <input type="text" id="name" name="name" required placeholder=" ">
-            <label for="name">Name</label>
-            <span class="error-message">Please enter your name.</span>
-          </div>
-          <div class="form-group reveal">
-            <input type="email" id="email" name="email" required placeholder=" ">
-            <label for="email">Email</label>
-            <span class="error-message">Please enter a valid email.</span>
-          </div>
-          <div class="form-group reveal">
-            <input type="text" id="subject" name="subject" required placeholder=" ">
-            <label for="subject">Subject</label>
-            <span class="error-message">Please enter a subject.</span>
-          </div>
-          <div class="form-group reveal textarea-group">
-            <textarea id="message" name="message" rows="5" required placeholder=" "></textarea>
-            <label for="message">Message</label>
-            <span class="error-message">Please write a message.</span>
-          </div>
-          <button type="submit" class="button button-primary">Send Message</button>
-          <div class="contact-signs">
-            <a href="mailto:japneetkaur.econ@gmail.com" class="sign-link">✉ Email</a>
-            <a href="https://www.linkedin.com/in/japneet-kaur-251817401" class="sign-link sign-link--linkedin" target="_blank" rel="noopener">
-              <span class="linkedin-icon" aria-hidden="true">in</span>
-              LinkedIn
-            </a>
-          </div>
-          <p id="formSuccess" class="form-success" aria-live="polite"></p>
-        </form>
+        <div class="contact-links">
+          <p>Email - <a href="mailto:japneetkaur.econ@gmail.com">japneetkaur.econ@gmail.com</a></p>
+          <p>LinkedIn - <a href="https://www.linkedin.com/in/japneet-kaur-251817401" target="_blank" rel="noopener">LinkedIn</a></p>
+        </div>
       </section>
     </main>
 
     <footer class="site-footer container reveal">
-      <div class="footer-copy">© 2025 Japneet Kaur</div>
+      <div class="footer-copy">&copy; 2025 Japneet Kaur</div>
     </footer>
   </div>
 
